@@ -236,7 +236,15 @@
   (let [base {'not #(format "not (%s)" (where-str %2))
               
               '[and or intersection]
-              #(apply format "(%2$s) %1$s (%3$s)" % (map where-str %&))
+              (fn where-expr
+                ([op arg]
+                   (format "(%1$s)" (where-str arg)))
+                ([op arg1 arg2]
+                   (format (str "(%1$s) " (name op) " (%2$s)") (where-str arg1) (where-str arg2)))
+                ([op arg1 arg2 & args]
+                   (format (str "(%1$s) " (name op) " (%2$s)")
+                           (where-str arg1)
+                           (apply where-expr op arg2 args))))
               
               '[= != < <= > >= like not-like]
               (fn comparison [op & name-value]

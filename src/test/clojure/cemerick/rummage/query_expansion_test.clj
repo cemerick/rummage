@@ -38,6 +38,8 @@
     ; and, or, intersection
     "select * from `foo` where (`a` > '5') intersection (`b` < '25')" `{select * from foo where (intersection (> a 5) (< b 25))}
     "select * from `foo` where (`c` is not null) or ((`a` > '5') and (`b` < '25'))" `{select * from foo where (or (not-null c) (and (> a 5) (< b 25)))}
+    "select * from `foo` where (`c` is not null) and ((`a` > '5') and (`b` < '25'))" `{select * from foo where (and (not-null c) (> a 5) (< b 25))}
+    "select * from `foo` where (`c` is not null)" `{select * from foo where (and (not-null c))}
     
     ; not
     "select * from `foo` where not ((`a` < '5') or (`b` > '25'))" `{select * from foo where (not (or (< a 5) (> b 25)))}

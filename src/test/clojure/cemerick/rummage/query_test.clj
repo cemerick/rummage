@@ -85,6 +85,15 @@
         (filter :keyword))
       `{select id from ~*test-domain-name* where (and (not-null :keyword)
                                                    (!= (every :keyword) :book))}
+
+      ;; 'and' with more than 2 args
+      (->> dataset
+           (filter (comp :book set sdb/as-collection :keyword))
+           (filter (comp (partial some #{:***** :****}) set sdb/as-collection :rating))
+           (filter (comp #(.endsWith % "Vonnegut") :author)))
+      `{select id from ~*test-domain-name* where (and (= :keyword :book)
+                                                      (in :rating #{:***** :****})
+                                                      (like :author "%Vonnegut"))}
       
       (filter (comp (partial some #{:CD :DVD}) set sdb/as-collection :keyword) dataset)
       `{select id from ~*test-domain-name* where (or (= :keyword :DVD) (= :keyword :CD))}
