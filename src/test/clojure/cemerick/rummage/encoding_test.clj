@@ -48,7 +48,8 @@
     (Date.) (URL. "http://clojure.org"))
   
   (roundtrip (enc/all-prefixed-config)
-    ["name" "a"] [42 42]
+    ["name" "a"] ["multiline" "one\ntwo\nthree\n\nfour"]
+    [42 42]
     [false true] [99.2 108.6]
     [(URL. "http://clojure.org") (URL. "http://clojure.org")]
     [(Date.) (Date.)]))
