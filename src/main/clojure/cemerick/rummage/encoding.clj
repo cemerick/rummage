@@ -44,7 +44,7 @@
               ([k v] [(keyword k) v]))))
 
 (defn from-prefixed-string
-  "Reproduces the representation of the item from a string created by to-sdb-str"
+  "Reproduces the representation of the item from a string created by to-prefixed-string"
   ([formatting ^String s]
     (let [[[_ prefix value-str]] (re-seq #"([^:]+):(.*)" s)]
       (when (not prefix)
