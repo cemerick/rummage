@@ -25,22 +25,7 @@ _____
 
 == Status
 
-This library is functionally very new, even though it was forked from an established project.  There will be changes.
-
-=== Current TODOs
-
-. Add/flesh out docstrings for the entire API + the stuff in encoding
-. Add notes on offline / local use (documented on https://github.com/richhickey/sdb[rhickey's readme])
-. Complete documentation in sections marked as TODO here
-. The default encoding for URLs doesn't seem great -- they don't sort lexicographically in a particularly useful way.
-Maybe something like "TLD domain [sub-domain sub-domain2 …] path".  I vaguely recall there being some standard 
-encoding like this for e.g. handling of dates in hadoop, etc.  Not in a rush to run into the pit that is URL
-encoding/parsing, though.
-. determine whether a default encoding configuration should be provided; that is, if a bare `client` is
-provided to e.g. `query` or `put-attrs`, should we just use one of the encoding schemes in
-`cemerick.rummage.encoding`?  If so, which one?  I'm all for simplicity, good defaults, and convention
-allowing for configuration, but I don't think any reasonable default exists (or perhaps I just haven't thought
-of one yet).
+This library was forked from an established project, and has gotten a fair bit of use over the past 18 months since its reorg/refactoring.  It can be considered stable.
 
 == "Installation"
 
@@ -50,14 +35,14 @@ Rummage is available in Maven central.  Add it to your Maven project's `pom.xml`
 <dependency>
   <groupId>com.cemerick</groupId>
   <artifactId>rummage</artifactId>
-  <version>0.0.3</version>
+  <version>1.0.0</version>
 </dependency>
 ----
 
 or your leiningen/cake project.clj:
 
 ----
-[com.cemerick/rummage "0.0.3"]
+[com.cemerick/rummage "1.0.0"]
 ----
 
 == Logging
@@ -709,6 +694,22 @@ $ mvn -Dmaven.test.skip=true clean install
 In any case, you'll find a built `.jar` file in the `target` directory, and in
 its designated spot in `~/.m2/repository` (assuming you ran `install` rather than
 e.g. `package`).
+
+=== TODOs
+
+. https://github.com/cemerick/rummage/issues/9[Eliminate Maven]
+. Add/flesh out docstrings for the entire API + the stuff in encoding
+. Add notes on offline / local use (documented on https://github.com/richhickey/sdb[rhickey's readme])
+. Complete documentation in sections marked as TODO here
+. The default encoding for URLs doesn't seem great -- they don't sort lexicographically in a particularly useful way.
+Maybe something like "TLD domain [sub-domain sub-domain2 …] path".  I vaguely recall there being some standard 
+encoding like this for e.g. handling of dates in hadoop, etc.  Not in a rush to run into the pit that is URL
+encoding/parsing, though.
+. determine whether a default encoding configuration should be provided; that is, if a bare `client` is
+provided to e.g. `query` or `put-attrs`, should we just use one of the encoding schemes in
+`cemerick.rummage.encoding`?  If so, which one?  I'm all for simplicity, good defaults, and convention
+allowing for configuration, but I don't think any reasonable default exists (or perhaps I just haven't thought
+of one yet).
 
 == Need Help?
 
