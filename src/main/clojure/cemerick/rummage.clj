@@ -223,14 +223,7 @@
       
       :else (apply encode-fn args))))
 
-(defn- ^{:dynamic true} where-str
-  [where-expansions expr]
-  (binding [where-str (partial where-str where-expansions)]
-    (let [expr-op (-> expr first strip-symbol-ns)
-          expansion-fn (where-expansions expr-op)]
-      (when-not expansion-fn
-        (throw (IllegalArgumentException. (str "No expansion available for where expression " expr))))
-      (apply expansion-fn (-> expr-op name (.replace "-" " ")) (map strip-symbol-ns (rest expr))))))
+(declare where-str)
 
 (def ^{:private true} where-expansions
   (let [base {'not #(format "not (%s)" (where-str %2))
@@ -274,6 +267,14 @@
                   [pair])))
       (into {}))))
 
+(defn- where-str
+  [expr]
+  (let [expr-op (-> expr first strip-symbol-ns)
+        expansion-fn (where-expansions expr-op)]
+    (when-not expansion-fn
+      (throw (IllegalArgumentException. (str "No expansion available for where expression " expr))))
+    (apply expansion-fn (-> expr-op name (.replace "-" " ")) (map strip-symbol-ns (rest expr)))))
+
 (def ^{:private true} query-language
   {:select #(case (strip-symbol-ns %)
               * "*"
@@ -286,7 +287,7 @@
                   (interpose ", ")
                   (apply str))))
    :from (comp escape-encode strip-symbol-ns)
-   :where (partial where-str where-expansions)
+   :where where-str
    :order-by (fn [& [args]]
                (when-not (sequential? args)
                  (throw (IllegalArgumentException. (str "order-by expects vector of attribute name and optional asc/desc sort direction, got: " args))))
