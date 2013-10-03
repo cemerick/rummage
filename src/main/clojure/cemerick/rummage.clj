@@ -50,7 +50,7 @@
         res (.listDomains (client client-or-config) req)]
     (concat (.getDomainNames res)
       (when (.getNextToken res)
-        (list-domains* client (.getNextToken res))))))
+        (list-domains* client-or-config (.getNextToken res))))))
 
 (defn list-domains
   "Returns a sequence of all domain names available from the given client."
