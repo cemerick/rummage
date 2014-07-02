@@ -409,11 +409,10 @@
                     (.withNextToken next-token))
           response (.select (client client-config) request)
           items (.getItems response)
-          result (and (seq items)
-                   (case (-> #"^\s*select\s+(count\(\*\)|itemName\(\))" (re-seq query) first second)
-                     "count(*)" (-> items ^Item first .getAttributes ^Attribute first .getValue Long/valueOf)
-                     "itemName()" (map #((:decode-id client-config) (.getName ^Item %)) items)
-                     (map (partial decode-item client-config) items)))]
+          result (case (-> #"^\s*select\s+(count\(\*\)|itemName\(\))" (re-seq query) first second)
+                   "count(*)" (-> items ^Item first .getAttributes ^Attribute first .getValue Long/valueOf)
+                   "itemName()" (map #((:decode-id client-config) (.getName ^Item %)) items)
+                   (map (partial decode-item client-config) items))]
       (if-not (coll? result)
         result
         (let [response-meta (.getCachedResponseMetadata (client client-config) request)]
