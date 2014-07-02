@@ -425,12 +425,13 @@
 
   Differs from `query-all` by not setting the \"chunk\" size to maximum.  Useful for
   queries with limit < 2500 that may still need to be continued using NextToken."
-  [client q next-token]
-  (let [res (query client q next-token)]
-    (if-let [next-token (-> res meta :next-token)]
-      (concat res
-        (lazy-seq (query-all* client q next-token)))
-      res)))
+  ([client q] (query-all* client q nil))
+  ([client q next-token]
+     (let [res (query client q next-token)]
+       (if-let [next-token (-> res meta :next-token)]
+         (concat res
+                 (lazy-seq (query-all* client q next-token)))
+         res))))
 
 (defn query-all
   "Returns a lazy seq of all results of the given query.  See `query` for details."
