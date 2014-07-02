@@ -420,7 +420,11 @@
                              :request-id (.getRequestId response-meta)
                              :next-token (.getNextToken response)}))))))
 
-(defn- query-all*
+(defn query-all*
+  "Returns a lazy seq of all results of the given query.  See `query` for details.
+
+  Differs from `query-all` by not setting the \"chunk\" size to maximum.  Useful for
+  queries with limit < 2500 that may still need to be continued using NextToken."
   [client q next-token]
   (let [res (query client q next-token)]
     (if-let [next-token (-> res meta :next-token)]
