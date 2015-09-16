@@ -1,5 +1,9 @@
 = Rummage
 
+**DEPRECATED**
+
+_SimpleDB itself is effectively deprecated. You should probably be using DynamoDB at this point. This project is unmaintained._
+
 http://github.com/cemerick/rummage[Rummage] is a Clojure client
 library for Amazon's http://aws.amazon.com/simpledb/[SimpleDB (SDB)].  It depends upon
 the standard http://aws.amazon.com/sdkforjava/[AWS SDK for Java],
