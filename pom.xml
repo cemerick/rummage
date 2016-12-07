@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.cemerick</groupId>
+    <groupId>bitsai</groupId>
     <artifactId>rummage</artifactId>
     <version>1.0.3-SNAPSHOT</version>
     <name>rummage</name>
     <description>A Clojure client library for Amazon's SimpleDB (SDB).</description>
-    <url>http://github.com/cemerick/rummage</url>
+    <url>http://github.com/bitsai/rummage</url>
 
     <parent>
         <groupId>org.clojure</groupId>
@@ -20,12 +20,18 @@
             <email>cemerick@snowtide.com</email>
             <timezone>-5</timezone>
         </developer>
+        <developer>
+            <name>Benny Tsai</name>
+            <url>https://github.com/bitsai</url>
+            <email>benny.tsai@gmail.com</email>
+            <timezone>-7</timezone>
+        </developer>
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:cemerick/rummage.git</connection>
-        <developerConnection>scm:git:git@github.com:cemerick/rummage.git</developerConnection>
-        <url>git@github.com:cemerick/rummage.git</url>
+        <connection>scm:git:git@github.com:bitsai/rummage.git</connection>
+        <developerConnection>scm:git:git@github.com:bitsai/rummage.git</developerConnection>
+        <url>git@github.com:bitsai/rummage.git</url>
     </scm>
 
     <properties>

@@ -409,11 +409,10 @@
                     (.withNextToken next-token))
           response (.select (client client-config) request)
           items (.getItems response)
-          result (and (seq items)
-                   (case (-> #"^\s*select\s+(count\(\*\)|itemName\(\))" (re-seq query) first second)
-                     "count(*)" (-> items ^Item first .getAttributes ^Attribute first .getValue Long/valueOf)
-                     "itemName()" (map #((:decode-id client-config) (.getName ^Item %)) items)
-                     (map (partial decode-item client-config) items)))]
+          result (case (-> #"^\s*select\s+(count\(\*\)|itemName\(\))" (re-seq query) first second)
+                   "count(*)" (-> items ^Item first .getAttributes ^Attribute first .getValue Long/valueOf)
+                   "itemName()" (map #((:decode-id client-config) (.getName ^Item %)) items)
+                   (map (partial decode-item client-config) items))]
       (if-not (coll? result)
         result
         (let [response-meta (.getCachedResponseMetadata (client client-config) request)]
@@ -421,7 +420,11 @@
                              :request-id (.getRequestId response-meta)
                              :next-token (.getNextToken response)}))))))
 
-(defn- query-all*
+(defn query-all*
+  "Returns a lazy seq of all results of the given query.  See `query` for details.
+
+  Differs from `query-all` by not setting the \"chunk\" size to maximum.  Useful for
+  queries with limit < 2500 that may still need to be continued using NextToken."
   [client q next-token]
   (let [res (query client q next-token)]
     (if-let [next-token (-> res meta :next-token)]
